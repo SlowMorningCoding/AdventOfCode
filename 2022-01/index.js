@@ -14,7 +14,7 @@ const getElves = async () => {
 
 const getMostCalories = async (elves) => {
   const elvesTotal = elves.map(calories => calories.reduce((accumulator, current) => accumulator + current, 0));
-  const elf = elvesTotal.reduce((accumulator, current, index) => current > accumulator.value ? { index, value: current } : accumulator, { index: -1, value: -1 });
+  const elf = elvesTotal.reduce((accumulator, current, index) => current > accumulator.value ? { elf: index + 1, value: current } : accumulator, { elf: -1, value: -1 });
   return elf;
 };
 
@@ -23,15 +23,16 @@ const getTopThreeCalories = async (elves) => {
   const topElves = elvesTotal.reduce((accumulator, current, index) => {
     if (current > accumulator[2].value) {
       accumulator.pop();
-      accumulator.push({ index, value: current });
-      accumulator.sort((a, b) => b.value - a.value );
+      accumulator.push({ elf: index + 1, value: current });
+      accumulator.sort((a, b) => b.value - a.value);
     }
     return accumulator;
-  }, [{ index: -1, value: -1 }, { index: -1, value: -1 }, { index: -1, value: -1 }]);
-  
-  topElves.push( { index: 'total', value: topElves.reduce((accumulator, current) => accumulator + current.value, 0) });
+  }, [{ elf: -1, value: -1 }, { elf: -1, value: -1 }, { elf: -1, value: -1 }]);
+
+  topElves.push({ elf: 'total', value: topElves.reduce((accumulator, current) => accumulator + current.value, 0) });
   return topElves;
 };
+
 const main = async () => {
   try {
     const elves = await getElves();
