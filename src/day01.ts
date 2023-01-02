@@ -14,13 +14,13 @@ const parseInput = async (input: string): Promise<Elf[]> => {
   return elves;
 };
 
-const getTopElf = async (elves: Elf[]) => {
+const getTopElf = async (elves: Elf[]): Promise<Elf> => {
   return elves.reduce((accumulator, current) => current.total > accumulator.total ? current : accumulator,
     { name: 'none', calories: [], total: 0 }
   );
 };
 
-const getTopThreeElf = async (elves: Elf[]) => {
+const getTopThreeElf = async (elves: Elf[]): Promise<Elf[]> => {
   const topElves = elves.reduce((accumulator: Elf[], current: Elf) => {
     if (current.total > accumulator[2].total) {
       accumulator.pop();
