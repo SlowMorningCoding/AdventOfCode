@@ -6,4 +6,4 @@
 
  # Usage
 
- Run script by command
+ Run script by command `npm run start` + e.g. `day1` to run day 1 quest 

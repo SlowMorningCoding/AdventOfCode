@@ -1,56 +1,56 @@
 #!/usr/bin/env node
-type elf = { name: string, calories: number[] };
+type Elf = { name: string, calories: number[], total: number };
 
-const parseInput = async (input: string): Promise<elf[]> => {
-  const blocks = input.split(/([\r]?\n){2}/);
+const parseInput = async (input: string): Promise<Elf[]> => {
+  const blocks: string[] = input.split(/(?:[\r]?\n){2}/);
 
-  console.table(blocks);
-
-  const elves = blocks.map(foods => {
-    return foods.split(/[\r\n]{2}/)
+  const elves: Elf[] = blocks.map((block, index) => {
+    const calories: number[] = block.split(/[\r]?\n/)
       .map(s => Number(s))
       .filter(n => n > 0);
+    const total: number = calories.reduce((accumulator, current) => accumulator + current, 0)
+    return { name: `Elf-${index + 1}`, calories, total };
   });
-  
-  return [{ name: 'name', calories: [1] }];
+  return elves;
 };
 
-const getMostCalories = async (elves: any[]) => {
-  const elvesTotal = elves.map(calories => calories.reduce((accumulator, current) => accumulator + current, 0));
-  const elf = elvesTotal.reduce((accumulator, current, index) => current > accumulator.value ? { elf: index + 1, value: current } : accumulator, { elf: -1, value: -1 });
-  return elf;
+const getTopElf = async (elves: Elf[]) => {
+  return elves.reduce((accumulator, current) => current.total > accumulator.total ? current : accumulator,
+    { name: 'none', calories: [], total: 0 }
+  );
 };
 
-const getTopThreeCalories = async (elves) => {
-  const elvesTotal = elves.map(calories => calories.reduce((accumulator, current) => accumulator + current, 0));
-  const topElves = elvesTotal.reduce((accumulator, current, index) => {
-    if (current > accumulator[2].value) {
+const getTopThreeElf = async (elves: Elf[]) => {
+  const topElves = elves.reduce((accumulator: Elf[], current: Elf) => {
+    if (current.total > accumulator[2].total) {
       accumulator.pop();
-      accumulator.push({ elf: index + 1, value: current });
-      accumulator.sort((a, b) => b.value - a.value);
+      accumulator.push(current);
+      accumulator.sort((a, b) => b.total - a.total);
     }
     return accumulator;
-  }, [{ elf: -1, value: -1 }, { elf: -1, value: -1 }, { elf: -1, value: -1 }]);
+  }, [{ name: 'none', calories: [], total: 0 }, { name: 'none', calories: [], total: 0 }, { name: 'none', calories: [], total: 0 }]);
 
-  topElves.push({ elf: 'total', value: topElves.reduce((accumulator, current) => accumulator + current.value, 0) });
+  topElves.push({
+    name: 'sum',
+    calories: topElves.map(elf => elf.total),
+    total: topElves.reduce((accumulator, current) => accumulator + current.total, 0)
+  });
   return topElves;
 };
 
 export const day01 = async (input: string) => {
   try {
     const elves = await parseInput(input);
-    console.table(elves);
-    //const elfWithMostCalories = await getMostCalories(elves);
-    //console.log('Elf With Most Calories');
-    //console.table(elfWithMostCalories);
 
-    //const topThreeElves = await getTopThreeCalories(elves);
-    //console.log('Top three Elves');
-    //console.table(topThreeElves);
+    const elfWithMostCalories = await getTopElf(elves);
+    console.log('Elf With Most Calories');
+    console.table(elfWithMostCalories);
+
+    const topThreeElves = await getTopThreeElf(elves);
+    console.log('Top three Elves');
+    console.table(topThreeElves);
 
   } catch (e) {
     console.log(e);
   }
 };
-
-
