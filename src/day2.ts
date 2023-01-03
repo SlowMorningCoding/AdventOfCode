@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { readFile } from './readFile.js';
+
 type Action = { opponent: string, response: string, score: number };
 
 const winTable: string[] = ['👊', '✋', '✌️', '👊'];
@@ -24,7 +26,7 @@ const calculateScore = (opponent: string, response: string): number => {
   return score;
 }
 
-const decryptInput1 = async (input: string): Promise<Action[]> => {
+const partOne = async (input: string): Promise<Action[]> => {
   const lines: string[] = input.split(/[\r]?\n/);
   const strategy: Action[] = lines.map((line) => {
     let [opponent, response]: string[] = line.split(' ');
@@ -62,7 +64,7 @@ const decryptInput1 = async (input: string): Promise<Action[]> => {
   return strategy;
 };
 
-const decryptInput2 = async (input: string): Promise<Action[]> => {
+const partTwo = async (input: string): Promise<Action[]> => {
   const lines: string[] = input.split(/[\r]?\n/);
   const strategy: Action[] = lines.map((line) => {
     let [opponent, response]: string[] = line.split(' ');
@@ -93,13 +95,15 @@ const decryptInput2 = async (input: string): Promise<Action[]> => {
   return strategy;
 };
 
-export const day02 = async (input: string) => {
+export const main = async () => {
   try {
-    /* Part one
-    let scoreTable: Action[] = await decryptInput1(input);
-    */
+    const input: string = await readFile('./public/day2_input.txt');
+    /* Part one */
+    // let scoreTable: Action[] = await partOne(input);
+
     /* Part two */
-    let scoreTable: Action[] = await decryptInput2(input);
+    let scoreTable: Action[] = await partTwo(input);
+
     scoreTable.push({ opponent: '', response: '', score: scoreTable.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
     console.table(scoreTable);
 

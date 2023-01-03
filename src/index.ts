@@ -2,10 +2,10 @@
 import { createSpinner } from 'nanospinner';
 import figlet from 'figlet';
 
-import { readFile } from './readFile.js';
-import { day01 } from "./day01.js";
-import { day02 } from "./day02.js";
-import { day3 } from "./day03.js";
+import { main as day1 } from "./day1.js";
+import { main as day2 } from "./day2.js";
+import { main as day3 } from "./day3.js";
+import { main as day4 } from "./day4.js";
 
 const main = async (argv: any) => {
   console.log('Start!');
@@ -15,20 +15,20 @@ const main = async (argv: any) => {
   console.time('total');
   const spinner = createSpinner('Running an Quest...\n').start();
 
-  if (argv[2] === 'day1') {
-    const input = await readFile('./public/day01_input.txt');
-    await day01(input);
+  switch (argv[2]) {
+    case 'day1': await day1();
+     break;
+    case 'day2': await day2();
+     break;
+    case 'day3': await day3();
+     break;
+    case 'day4': await day4();
+     break;
+    
+    default: throw new Error(`unknown parameter ${argv[2]}`);
   }
-  else if (argv[2] === 'day2') {
-    const input = await readFile('./public/day02_input.txt');
-    await day02(input);
-  }
-  else if (argv[2] === 'day3') {
-    const input = await readFile('./public/day03_input.txt');
-    await day3(input);
-  }
+
   console.log('\n');
-  
   spinner.success({ text: `Quest done!` });
   console.timeEnd('total');
 }
