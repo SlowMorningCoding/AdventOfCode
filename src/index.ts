@@ -6,6 +6,7 @@ import { main as day1 } from "./day1.js";
 import { main as day2 } from "./day2.js";
 import { main as day3 } from "./day3.js";
 import { main as day4 } from "./day4.js";
+import { main as day5 } from "./day5.js";
 
 const main = async (argv: any) => {
   console.log('Start!');
@@ -23,6 +24,8 @@ const main = async (argv: any) => {
     case 'day3': await day3();
      break;
     case 'day4': await day4();
+     break;
+    case 'day5': await day5();
      break;
     
     default: throw new Error(`unknown parameter ${argv[2]}`);
