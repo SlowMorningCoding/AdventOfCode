@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 import { readFile } from './readFile.js';
 
-type Stacks = { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': [], '9': [] };
 type Move = { count: number, from: number, to: number };
 
 const parseInput = async (input: string): Promise<{ stackTable: string[][], moves: Move[] }> => {
   let [stackBlock, movesBlock]: string[] = input.split(/(?:[\r]?\n){2}/);
-
   // Stacks
   let stackTable = stackBlock.split(/[\r]?\n/).map(s => s.split(''));
   // Pivot stackTable
@@ -21,7 +19,6 @@ const parseInput = async (input: string): Promise<{ stackTable: string[][], move
   }, [[]]);
   // clean table
   stackTable = stackTable.filter(tLine => tLine[0] !== ' ').map(tLine => tLine.filter(str => str !== ' '));
-
   // Moves
   let moves = movesBlock.split(/[\r]?\n/)
     .map(str => {
@@ -57,7 +54,6 @@ const partTwo = async (stackTable: string[][], moves: Move[]): Promise<string> =
   let message = stackTable1.map(stack => stack[stack.length - 1]).join('');
   return message;
 };
-
 
 export const main = async () => {
   try {

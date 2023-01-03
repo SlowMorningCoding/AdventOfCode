@@ -7,8 +7,10 @@ import { main as day2 } from "./day2.js";
 import { main as day3 } from "./day3.js";
 import { main as day4 } from "./day4.js";
 import { main as day5 } from "./day5.js";
+import { main as day6 } from "./day6.js";
+import { main as day7 } from "./day7.js";
 
-const main = async (argv: any) => {
+const main = async (argv: any) => { 
   console.log('Start!');
   console.clear();
   console.log(figlet.textSync('Advent of Code!'));
@@ -17,16 +19,13 @@ const main = async (argv: any) => {
   const spinner = createSpinner('Running an Quest...\n').start();
 
   switch (argv[2]) {
-    case 'day1': await day1();
-     break;
-    case 'day2': await day2();
-     break;
-    case 'day3': await day3();
-     break;
-    case 'day4': await day4();
-     break;
-    case 'day5': await day5();
-     break;
+    case 'day1': await day1(); break;
+    case 'day2': await day2(); break;
+    case 'day3': await day3(); break;
+    case 'day4': await day4(); break;
+    case 'day5': await day5(); break;
+    case 'day6': await day6(); break;
+    case 'day7': await day7(); break;
     
     default: throw new Error(`unknown parameter ${argv[2]}`);
   }
