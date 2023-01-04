@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { readFile } from './readFile.js';
 
 type Action = { opponent: string, response: string, score: number };
@@ -27,7 +26,7 @@ const calculateScore = (opponent: string, response: string): number => {
 }
 
 const partOne = async (input: string): Promise<Action[]> => {
-  const lines: string[] = input.split(/[\r]?\n/);
+  const lines: string[] = input.split(/\r?\n/);
   const strategy: Action[] = lines.map((line) => {
     let [opponent, response]: string[] = line.split(' ');
     // opponent play: A for Rock, B for Paper, and C for Scissors.
@@ -65,7 +64,7 @@ const partOne = async (input: string): Promise<Action[]> => {
 };
 
 const partTwo = async (input: string): Promise<Action[]> => {
-  const lines: string[] = input.split(/[\r]?\n/);
+  const lines: string[] = input.split(/\r?\n/);
   const strategy: Action[] = lines.map((line) => {
     let [opponent, response]: string[] = line.split(' ');
     // opponent play: A for Rock, B for Paper, and C for Scissors.
@@ -97,15 +96,18 @@ const partTwo = async (input: string): Promise<Action[]> => {
 
 export const main = async () => {
   try {
+    /* Parse input */
     const input: string = await readFile('./public/day2_input.txt');
+    
     /* Part one */
-    // let scoreTable: Action[] = await partOne(input);
+    let scoreTable1: Action[] = await partOne(input);
+    scoreTable1.push({ opponent: '', response: '', score: scoreTable1.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
+    console.table(scoreTable1);
 
     /* Part two */
-    let scoreTable: Action[] = await partTwo(input);
-
-    scoreTable.push({ opponent: '', response: '', score: scoreTable.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
-    console.table(scoreTable);
+    let scoreTable2: Action[] = await partTwo(input);
+    scoreTable2.push({ opponent: '', response: '', score: scoreTable2.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
+    console.table(scoreTable2);
 
   } catch (e) {
     console.log(e);

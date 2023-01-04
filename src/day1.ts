@@ -1,13 +1,12 @@
-#!/usr/bin/env node
 import { readFile } from './readFile.js';
 
 type Elf = { name: string, calories: number[], total: number };
 
 const parseInput = async (input: string): Promise<Elf[]> => {
-  const blocks: string[] = input.split(/(?:[\r]?\n){2}/);
+  const blocks: string[] = input.split(/(?:\r?\n){2}/);
 
   const elves: Elf[] = blocks.map((block, index) => {
-    const calories: number[] = block.split(/[\r]?\n/)
+    const calories: number[] = block.split(/\r?\n/)
       .map(s => Number(s))
       .filter(n => n > 0);
     const total: number = calories.reduce((accumulator, current) => accumulator + current, 0)
@@ -44,13 +43,16 @@ const partTwo = async (elves: Elf[]): Promise<Elf[]> => {
 
 export const main = async () => {
   try {
+    /* Parse input */
     const input: string = await readFile('./public/day1_input.txt');
     const elves = await parseInput(input);
 
+    /* Part one */
     const elfWithMostCalories = await partOne(elves);
     console.log('Elf With Most Calories');
     console.table(elfWithMostCalories);
 
+    /* Part two */
     const topThreeElves = await partTwo(elves);
     console.log('Top three Elves');
     console.table(topThreeElves);

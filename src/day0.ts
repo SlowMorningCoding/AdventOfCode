@@ -1,8 +1,7 @@
-#!/usr/bin/env node
 import { readFile } from './readFile.js';
 
 const parseInput = async (input: string) => {
-  const data: number[][] = input.split(/[\r]?\n/)
+  const data: number[][] = input.split(/\r?\n/)
     .map(line => line.split('')
       .map(s => Number(s))
     )
@@ -19,7 +18,7 @@ const partTwo = async (): Promise<string> => {
 
 export const main = async () => {
   try {
-    /* Get input data */
+    /* Parse input */
     const input: string = await readFile('./public/day0_input.txt');
     await parseInput(input);
     

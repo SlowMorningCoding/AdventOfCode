@@ -1,12 +1,11 @@
-#!/usr/bin/env node
 import { readFile } from './readFile.js';
 
 type AssignmentPair = { elfA_start: number, elfA_end: number, elfB_start: number, elfB_end: number };
 
 const parseInput = async (input: string): Promise<AssignmentPair[]> => {
-  const lines: string[] = input.split(/[\r]?\n/);
+  const lines: string[] = input.split(/\r?\n/);
   const assignmentPairs = lines.map(line => {
-    const [elfA_start, elfA_end, elfB_start, elfB_end]: number[] = line.split(/,|-/).map(s => Number(s));
+    const [elfA_start, elfA_end, elfB_start, elfB_end]: number[] = line.split(/[,-]/).map(s => Number(s));
     return { elfA_start, elfA_end, elfB_start, elfB_end };
   });
   return assignmentPairs;
@@ -34,6 +33,7 @@ const partTwo = async (assignmentPairs: AssignmentPair[]) => {
 
 export const main = async () => {
   try {
+    /* Parse input */
     const input: string = await readFile('./public/day4_input.txt');
     const assignmentPairs = await parseInput(input);
 
@@ -46,7 +46,6 @@ export const main = async () => {
     const overlaps: AssignmentPair[] = await partTwo(assignmentPairs);
     console.table(overlaps);
     console.log('Overlaps count:', overlaps.length)
-
 
   } catch (e) {
     console.log(e);

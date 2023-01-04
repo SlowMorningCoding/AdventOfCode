@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { readFile } from './readFile.js';
 
 type Move = { direction: string, distance: number };
@@ -119,7 +118,6 @@ const partOne = async (moves: Move[]): Promise<string> => {
   const tail = new Knot("T");
   const ropeMap = new RopeMap(0, 0, 0, 0);
   let stepCount = 0;
-  const totalSteps = moves.reduce((acc, cur) => acc + cur.distance, 0)
   const tailMarkers: Marker[] = [];
 
   for (const move of moves) {
@@ -141,13 +139,7 @@ const partOne = async (moves: Move[]): Promise<string> => {
   ])
   ropeMap.draw();
   console.log('\n');
-  /*
-  console.clear()
-  ropeMap.draw();
-  console.log(`${stepCount}/${totalSteps} ${move.direction} H:${head.x},${head.y} T:${tail.x},${tail.y}`);
-  await sleep();
-  */
-
+  
   const tailPositions: number = tail.positionHistory.reduce((acc: number, current: string, index: number, arr: string[]) => {
     if (arr.indexOf(current) === index) acc += 1;
     return acc;
@@ -169,7 +161,6 @@ const partTwo = async (moves: Move[]): Promise<string> => {
   const tail9 = new Knot("9");
   const ropeMap = new RopeMap(0, 0, 0, 0);
   let stepCount = 0;
-  const totalSteps = moves.reduce((acc, cur) => acc + cur.distance, 0)
   const tailMarkers: Marker[] = [];
 
   for (const move of moves) {
@@ -206,12 +197,7 @@ const partTwo = async (moves: Move[]): Promise<string> => {
   ])
   ropeMap.draw();
   console.log('\n');
-  /*
-  console.clear()
-  ropeMap.draw();
-  await sleep();
-  */
-
+  
   const tailPositions: number = tail9.positionHistory.reduce((acc: number, current: string, index: number, arr: string[]) => {
     if (arr.indexOf(current) === index) acc += 1;
     return acc;
@@ -221,7 +207,7 @@ const partTwo = async (moves: Move[]): Promise<string> => {
 
 export const main = async () => {
   try {
-    /* Get input data */
+    /* Parse input */
     const input: string = await readFile('./public/day9_input.txt');
     const moves: Move[] = await parseInput(input);
 

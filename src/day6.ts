@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { readFile } from './readFile.js';
 
 const testMarker = (marker: string): boolean => {
@@ -34,13 +33,15 @@ const partTwo = async (input: string): Promise<string> => {
   return `${marker} at index ${index}`;
 };
 
-
 export const main = async () => {
   try {
+    /* Parse input */
     const input: string = await readFile('./public/day6_input.txt');
+    
     /* Part one */
     const message1 = await partOne(input);
     console.log(`Part One message ${message1}`);
+    
     /* Part two */
     const message2 = await partTwo(input);
     console.log(`Part Two message ${message2}`);
