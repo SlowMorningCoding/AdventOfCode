@@ -46,13 +46,25 @@ const scanFiles = async (input: string) => {
 }
 
 const partOne = async (): Promise<string> => {
-  const fsSearch: File[] = fileSystem.filter(file => file.type==='dir' && file.size <= 100000);
+  const fsSearch: File[] = fileSystem.filter(file => file.type === 'dir' && file.size <= 100000);
   console.table(fsSearch);
   return `${fsSearch.reduce((accumulator, current: File) => accumulator + current.size, 0)}`;
 };
 
 const partTwo = async (): Promise<string> => {
-  return ``;
+  const totalSpace: number = 70000000;
+  const spaceNeed: number = 30000000
+  let unusedSpace: number = -1;
+  // get dirs
+  const fsSearch: File[] = fileSystem.filter(file => file.type === 'dir')
+    .sort((a: File, b: File) => a.size - b.size);
+  // calculate unused space
+  const root: File = fsSearch.find(f => f.path === ' ') ?? { type: '', path: ' ', size: 0 };
+  unusedSpace = totalSpace - root.size;
+  // find dir to delete
+  const dirToDelete: File = fsSearch.find(f => f.size > spaceNeed - unusedSpace) ?? { type: '', path: 'none', size: 0 };
+
+  return `${dirToDelete.type} ${dirToDelete.path} ${dirToDelete.size}`;
 };
 
 
