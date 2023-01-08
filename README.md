@@ -6,4 +6,4 @@
 
  # Usage
 
- Run script by command `npm run start` + e.g. `day1` to run day 1 quest 
+ Run scripts by command e.g. `npx tsx src/day1.ts` to run day 1 quest 
