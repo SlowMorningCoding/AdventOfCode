@@ -7,7 +7,7 @@ async function main() {
     console.log(figlet.textSync('Advent of Code - Day5'));
     console.time('total time');
     /* Parse input */
-    const input: string = await readFile('./public/day5_input.txt');
+    const input: string = await readFile('./public/input_day5.txt');
     const { stackTable, moves } = await parseInput(input);
     console.table(stackTable);
     

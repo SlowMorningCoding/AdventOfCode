@@ -7,7 +7,7 @@ async function main() {
     console.log(figlet.textSync('Advent of Code - Day9'));
     console.time('total time');
     /* Parse input */
-    const input: string = await readFile('./public/day9_input.txt');
+    const input: string = await readFile('./public/input_day9.txt');
     const moves: Move[] = await parseInput(input);
 
     /* Part one */
@@ -24,10 +24,10 @@ async function main() {
   console.timeEnd('total time');
 };
 
+const sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
+
 type Move = { direction: string, distance: number };
 type Marker = { name: string, x: number, y: number };
-
-const sleep = (ms = 100) => new Promise((r) => setTimeout(r, ms));
 
 class Knot {
   public name: string;

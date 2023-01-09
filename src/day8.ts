@@ -7,7 +7,7 @@ async function main() {
     console.log(figlet.textSync('Advent of Code - Day8'));
     console.time('total time');
     /* Parse input */
-    const input: string = await readFile('./public/day8_input.txt');
+    const input: string = await readFile('./public/input_day8.txt');
     await parseForest(input);
     colMax = forest[0].length - 1;
     lineMax = forest.length - 1;
