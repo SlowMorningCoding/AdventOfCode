@@ -19,7 +19,6 @@ async function main() {
   } catch (e) {
     console.log(e);
   }
-
   console.timeEnd('total');
 }
 
@@ -106,7 +105,6 @@ async function calcMonkeyBusiness(monkeys: Monkey[], rounds: number): Promise<nu
   console.table(monkeys);
   while (round < rounds) {
     round += 1;
-    //progressPar(round, rounds);
     for (const monkey of monkeys) {
       await monkey.doMonkeyBusiness();
     }

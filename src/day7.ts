@@ -1,17 +1,44 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
 
+async function main() {
+  try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day7'));
+    console.time('total time');
+    /* Parse input */
+    const input: string = await readFile('./public/day7_input.txt');
+    await scanFiles(input);
+    console.table(fileSystem);
+    
+    /* Part one */
+    const message1 = await partOne();
+    console.log(`Part One message ${message1}`);
+    
+    /* Part two */
+    const message2 = await partTwo();
+    console.log(`Part Two message ${message2}`);
+    
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
+
 type File = { type: string, path: string, size: number };
+
 const fileSystem: File[] = [{ type: 'dir', path: ' ', size: 0 }];
 let position: string[] = [' '];
 
-const cdCommand = async (command: string) => {
+async function cdCommand(command: string) {
   const path = command.slice(3);
   if (path === "/") position = [' '];
   else if (path === "..") position.pop();
   else if (path.match(/[a-zA-Z\d]./g)) position.push(path);
   else throw new Error(`unknown path: "${path}"`);
 }
-const lsCommand = async (command: string) => {
+
+async function lsCommand(command: string) {
   const lines: string[] = command.split(/\r?\n/);
   lines.shift();
   const files: File[] = lines.map(s => {
@@ -37,7 +64,7 @@ const lsCommand = async (command: string) => {
   });
 }
 
-const scanFiles = async (input: string) => {
+async function scanFiles(input: string) {
   const commands: string[] = input.split(/\$/)
     .map(s => s.trim())
     .filter(s => s);
@@ -53,13 +80,13 @@ const scanFiles = async (input: string) => {
   }
 }
 
-const partOne = async (): Promise<string> => {
+async function partOne(): Promise<string> {
   const fsSearch: File[] = fileSystem.filter(file => file.type === 'dir' && file.size <= 100000);
   console.table(fsSearch);
   return `${fsSearch.reduce((accumulator, current: File) => accumulator + current.size, 0)}`;
 };
 
-const partTwo = async (): Promise<string> => {
+async function partTwo(): Promise<string> {
   const totalSpace: number = 70000000;
   const spaceNeed: number = 30000000
   let unusedSpace: number = -1;
@@ -75,22 +102,4 @@ const partTwo = async (): Promise<string> => {
   return `${dirToDelete.type} ${dirToDelete.path} ${dirToDelete.size}`;
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const input: string = await readFile('./public/day7_input.txt');
-    await scanFiles(input);
-    console.table(fileSystem);
-    
-    /* Part one */
-    const message1 = await partOne();
-    console.log(`Part One message ${message1}`);
-    
-    /* Part two */
-    const message2 = await partTwo();
-    console.log(`Part Two message ${message2}`);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();

@@ -1,4 +1,22 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
+
+async function main() {
+  console.clear();
+    console.log(figlet.textSync('Advent of Code - Day10'));
+    console.time('total time');
+    try {
+      /* Parse input */
+    const instructions = await parseInput('./public/input_day10.txt');
+
+    /* Part one and two*/
+    await partOne(instructions);
+
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
 
 type Instruction = { command: string, value: number };
 
@@ -44,7 +62,7 @@ class Computer {
   }
 }
 
-const parseInput = async (filePath: string): Promise<Instruction[]> => {
+async function parseInput(filePath: string): Promise<Instruction[]> {
   const input: string = await readFile(filePath);
   const data = input.split(/\r?\n/)
     .map(line => {
@@ -54,7 +72,7 @@ const parseInput = async (filePath: string): Promise<Instruction[]> => {
   return data;
 };
 
-const partOne = async (instructions: Instruction[]) => {
+async function partOne(instructions: Instruction[]) {
   const tupe = new Computer();
 
   for (const instruction of instructions) {
@@ -76,15 +94,4 @@ const partOne = async (instructions: Instruction[]) => {
   console.table(tupe.CRTs);
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const instructions = await parseInput('./public/input_day10.txt');
-
-    /* Part one and two*/
-    await partOne(instructions);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();

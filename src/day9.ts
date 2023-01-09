@@ -1,4 +1,28 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
+
+async function main() {
+  try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day9'));
+    console.time('total time');
+    /* Parse input */
+    const input: string = await readFile('./public/day9_input.txt');
+    const moves: Move[] = await parseInput(input);
+
+    /* Part one */
+    const result1 = await partOne(moves);
+    console.log(`Part One: ${result1}`);
+
+    /* Part two */
+    const result2 = await partTwo(moves);
+    console.log(`Part Two: ${result2}`);
+
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
 
 type Move = { direction: string, distance: number };
 type Marker = { name: string, x: number, y: number };
@@ -105,7 +129,7 @@ class RopeMap {
   }
 }
 
-const parseInput = async (input: string): Promise<Move[]> => {
+async function parseInput(input: string): Promise<Move[]> {
   return input.split(/\r?\n/) // lines
     .map(line => {
       let [direction, sDistance] = line.split(' ');
@@ -113,7 +137,7 @@ const parseInput = async (input: string): Promise<Move[]> => {
     })
 };
 
-const partOne = async (moves: Move[]): Promise<string> => {
+async function partOne(moves: Move[]): Promise<string> {
   const head = new Knot("H");
   const tail = new Knot("T");
   const ropeMap = new RopeMap(0, 0, 0, 0);
@@ -139,7 +163,7 @@ const partOne = async (moves: Move[]): Promise<string> => {
   ])
   ropeMap.draw();
   console.log('\n');
-  
+
   const tailPositions: number = tail.positionHistory.reduce((acc: number, current: string, index: number, arr: string[]) => {
     if (arr.indexOf(current) === index) acc += 1;
     return acc;
@@ -148,7 +172,7 @@ const partOne = async (moves: Move[]): Promise<string> => {
   return `Tail posisions ${tailPositions} of ${tail.positionHistory.length}`;
 };
 
-const partTwo = async (moves: Move[]): Promise<string> => {
+async function partTwo (moves: Move[]): Promise<string> {
   const head = new Knot("H");
   const tail1 = new Knot("1");
   const tail2 = new Knot("2");
@@ -197,7 +221,7 @@ const partTwo = async (moves: Move[]): Promise<string> => {
   ])
   ropeMap.draw();
   console.log('\n');
-  
+
   const tailPositions: number = tail9.positionHistory.reduce((acc: number, current: string, index: number, arr: string[]) => {
     if (arr.indexOf(current) === index) acc += 1;
     return acc;
@@ -205,21 +229,4 @@ const partTwo = async (moves: Move[]): Promise<string> => {
   return `Tail posisions ${tailPositions} of ${tail9.positionHistory.length}`;
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const input: string = await readFile('./public/day9_input.txt');
-    const moves: Move[] = await parseInput(input);
-
-    /* Part one */
-    const result1 = await partOne(moves);
-    console.log(`Part One: ${result1}`);
-
-    /* Part two */
-    const result2 = await partTwo(moves);
-    console.log(`Part Two: ${result2}`);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();

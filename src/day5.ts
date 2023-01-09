@@ -1,8 +1,33 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
+
+async function main() {
+  try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day5'));
+    console.time('total time');
+    /* Parse input */
+    const input: string = await readFile('./public/day5_input.txt');
+    const { stackTable, moves } = await parseInput(input);
+    console.table(stackTable);
+    
+    /* Part one */
+    const message1 = await partOne(stackTable, moves);
+    console.log(`Part One message ${message1}`);
+    
+    /* Part two */
+    const message2 = await partTwo(stackTable, moves);
+    console.log(`Part Two message ${message2}`);
+    
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
 
 type Move = { count: number, from: number, to: number };
 
-const parseInput = async (input: string): Promise<{ stackTable: string[][], moves: Move[] }> => {
+async function parseInput(input: string): Promise<{ stackTable: string[][], moves: Move[] }> {
   let [stackBlock, movesBlock]: string[] = input.split(/(?:\r?\n){2}/);
   // Stacks
   let stackTable = stackBlock.split(/\r?\n/).map(s => s.split(''));
@@ -28,7 +53,7 @@ const parseInput = async (input: string): Promise<{ stackTable: string[][], move
   return { stackTable, moves }
 };
 
-const partOne = async (stackTable: string[][], moves: Move[]): Promise<string> => {
+async function partOne(stackTable: string[][], moves: Move[]): Promise<string> {
   let stackTable1 = stackTable.map(item => ([...item])); // clone stackTable
   moves.forEach(({ count, from, to }) => {
     for (let index = 0; index < Number(count); index++) {
@@ -40,7 +65,7 @@ const partOne = async (stackTable: string[][], moves: Move[]): Promise<string> =
   return message;
 };
 
-const partTwo = async (stackTable: string[][], moves: Move[]): Promise<string> => {
+async function partTwo(stackTable: string[][], moves: Move[]): Promise<string> {
   let stackTable1 = stackTable.map(item => ([...item])); // clone stackTable
   moves.forEach(({ count, from, to }) => {
     const stack = [];
@@ -54,22 +79,4 @@ const partTwo = async (stackTable: string[][], moves: Move[]): Promise<string> =
   return message;
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const input: string = await readFile('./public/day5_input.txt');
-    const { stackTable, moves } = await parseInput(input);
-    console.table(stackTable);
-    
-    /* Part one */
-    const message1 = await partOne(stackTable, moves);
-    console.log(`Part One message ${message1}`);
-    
-    /* Part two */
-    const message2 = await partTwo(stackTable, moves);
-    console.log(`Part Two message ${message2}`);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();

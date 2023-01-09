@@ -1,10 +1,35 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
+
+async function main() {
+  try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day2'));
+    console.time('total time');
+    /* Parse input */
+    const input: string = await readFile('./public/day2_input.txt');
+    
+    /* Part one */
+    let scoreTable1: Action[] = await partOne(input);
+    scoreTable1.push({ opponent: '', response: '', score: scoreTable1.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
+    console.table(scoreTable1);
+    
+    /* Part two */
+    let scoreTable2: Action[] = await partTwo(input);
+    scoreTable2.push({ opponent: '', response: '', score: scoreTable2.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
+    console.table(scoreTable2);
+    
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
 
 type Action = { opponent: string, response: string, score: number };
 
 const winTable: string[] = ['👊', '✋', '✌️', '👊'];
 
-const calculateScore = (opponent: string, response: string): number => {
+function calculateScore(opponent: string, response: string): number {
   /* The total score of round is the score for the shape you selected (Rock: 1p, Paper: 2p, Scissors: 3p)
    plus outcome of the round (you lost: 0p, draw: 3p, won: 6p)
    */
@@ -25,7 +50,7 @@ const calculateScore = (opponent: string, response: string): number => {
   return score;
 }
 
-const partOne = async (input: string): Promise<Action[]> => {
+async function partOne(input: string): Promise<Action[]> {
   const lines: string[] = input.split(/\r?\n/);
   const strategy: Action[] = lines.map((line) => {
     let [opponent, response]: string[] = line.split(' ');
@@ -63,7 +88,7 @@ const partOne = async (input: string): Promise<Action[]> => {
   return strategy;
 };
 
-const partTwo = async (input: string): Promise<Action[]> => {
+async function partTwo(input: string): Promise<Action[]> {
   const lines: string[] = input.split(/\r?\n/);
   const strategy: Action[] = lines.map((line) => {
     let [opponent, response]: string[] = line.split(' ');
@@ -94,22 +119,4 @@ const partTwo = async (input: string): Promise<Action[]> => {
   return strategy;
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const input: string = await readFile('./public/day2_input.txt');
-    
-    /* Part one */
-    let scoreTable1: Action[] = await partOne(input);
-    scoreTable1.push({ opponent: '', response: '', score: scoreTable1.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
-    console.table(scoreTable1);
-
-    /* Part two */
-    let scoreTable2: Action[] = await partTwo(input);
-    scoreTable2.push({ opponent: '', response: '', score: scoreTable2.reduce((accumulator, current: Action) => accumulator + current.score, 0) });
-    console.table(scoreTable2);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();

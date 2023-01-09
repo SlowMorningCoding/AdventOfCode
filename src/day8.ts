@@ -1,4 +1,30 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
+
+async function main() {
+  try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day8'));
+    console.time('total time');
+    /* Parse input */
+    const input: string = await readFile('./public/day8_input.txt');
+    await parseForest(input);
+    colMax = forest[0].length - 1;
+    lineMax = forest.length - 1;
+    
+    /* Part one */
+    const message1 = await partOne();
+    console.log(`Part One message ${message1}`);
+    
+    /* Part two */
+    const message2 = await partTwo();
+    console.log(`Part Two message ${message2}`);
+    
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
 
 const forest: number[][] = [];
 let colMax = -1;
@@ -13,7 +39,7 @@ const parseForest = async (input: string) => {
   forest.push(...data);
 };
 
-const isVisibleToNorth = (line: number, col: number): boolean => {
+function isVisibleToNorth (line: number, col: number): boolean {
   const tree: number = forest[line][col];
   for (let pLine = line - 1; pLine >= 0; pLine--) {
     let pTree = forest[pLine][col];
@@ -24,7 +50,7 @@ const isVisibleToNorth = (line: number, col: number): boolean => {
   return true;
 }
 
-const isVisibleToSouth = (line: number, col: number): boolean => {
+function isVisibleToSouth(line: number, col: number): boolean {
   const tree: number = forest[line][col];
   for (let pLine = line + 1; pLine <= lineMax; pLine++) {
     let pTree = forest[pLine][col];
@@ -35,7 +61,7 @@ const isVisibleToSouth = (line: number, col: number): boolean => {
   return true;
 }
 
-const isVisibleToEast = (line: number, col: number): boolean => {
+function isVisibleToEast(line: number, col: number): boolean {
   const tree: number = forest[line][col];
   for (let pCol = col + 1; pCol <= colMax; pCol++) {
     let pTree = forest[line][pCol];
@@ -46,7 +72,7 @@ const isVisibleToEast = (line: number, col: number): boolean => {
   return true;
 }
 
-const isVisibleToWest = (line: number, col: number): boolean => {
+function isVisibleToWest(line: number, col: number): boolean {
   const tree: number = forest[line][col];
   for (let pCol = col - 1; pCol >= 0; pCol--) {
     let pTree: number = forest[line][pCol];
@@ -57,7 +83,7 @@ const isVisibleToWest = (line: number, col: number): boolean => {
   return true;
 }
 
-const isVisible = async (line: number, col: number): Promise<boolean> => {
+async function isVisible(line: number, col: number): Promise<boolean> {
   if (isVisibleToNorth(line, col)
     || isVisibleToSouth(line, col)
     || isVisibleToEast(line, col)
@@ -65,7 +91,7 @@ const isVisible = async (line: number, col: number): Promise<boolean> => {
   return false;
 };
 
-const partOne = async (): Promise<string> => {
+async function partOne(): Promise<string> {
   let visibleCount: number = 0;
   for (let line = 0; line <= lineMax; line++) { // lines
     visMap.push([]);
@@ -83,7 +109,7 @@ const partOne = async (): Promise<string> => {
   return `visible from outside the grid ${visibleCount}`;
 };
 
-const calcScenicScore = async (line: number, col: number): Promise<number> => {
+async function calcScenicScore(line: number, col: number): Promise<number> {
   let score: number[] = [];
   const treeHeight: number = forest[line][col];
   let pTreeCount: number = 0;
@@ -121,7 +147,7 @@ const calcScenicScore = async (line: number, col: number): Promise<number> => {
   }, 0);
 };
 
-const partTwo = async (): Promise<string> => {
+async function partTwo(): Promise<string> {
   let topScenicScore = 0;
   for (let line = 0; line <= lineMax; line++) { // lines
     for (let col = 0; col <= colMax; col++) { // colums
@@ -132,23 +158,4 @@ const partTwo = async (): Promise<string> => {
   return `scenic score ${topScenicScore}`;
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const input: string = await readFile('./public/day8_input.txt');
-    await parseForest(input);
-    colMax = forest[0].length - 1;
-    lineMax = forest.length - 1;
-
-    /* Part one */
-    const message1 = await partOne();
-    console.log(`Part One message ${message1}`);
-
-    /* Part two */
-    const message2 = await partTwo();
-    console.log(`Part Two message ${message2}`);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();

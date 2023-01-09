@@ -1,36 +1,40 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
 
-const parseInput = async (input: string) => {
-  const data: number[][] = input.split(/\r?\n/)
-    .map(line => line.split('')
-      .map(s => Number(s))
-    )
-  return data;
-};
-
-const partOne = async (): Promise<string> => {
-  return `Todo`;
-};
-
-const partTwo = async (): Promise<string> => {
-  return `Todo`;
-};
-
-export const main = async () => {
+async function main() {
   try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day0'));
+    console.time('total time');
     /* Parse input */
     const input: string = await readFile('./public/day0_input.txt');
     await parseInput(input);
-    
+
     /* Part one */
-    const result1 = await partOne();
-    console.log(`Part One: ${result1}`);
-    
+    const p1Result = await partOne();
+    console.log(`Part One: ${p1Result}`);
+
     /* Part two */
-    const result2 = await partTwo();
-    console.log(`Part Two: ${result2}`);
+    const p2Result = await partTwo();
+    console.log(`Part Two: ${p2Result}`);
 
   } catch (e) {
     console.log(e);
   }
+  console.timeEnd('total time');
 };
+
+async function parseInput(input: string) {
+  const data: string[] = input.split(/\r?\n/);
+  return data;
+};
+
+async function partOne(): Promise<number> {
+  return 0;
+};
+
+async function partTwo(): Promise<number> {
+  return 0;
+};
+
+await main();

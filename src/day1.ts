@@ -1,8 +1,34 @@
+import figlet from 'figlet';
 import { readFile } from './readFile.js';
+
+async function main() {
+  try {
+    console.clear();
+    console.log(figlet.textSync('Advent of Code - Day1'));
+    console.time('total time');
+    /* Parse input */
+    const input: string = await readFile('./public/day1_input.txt');
+    const elves = await parseInput(input);
+
+    /* Part one */
+    const elfWithMostCalories = await partOne(elves);
+    console.log('Elf With Most Calories');
+    console.table(elfWithMostCalories);
+    
+    /* Part two */
+    const topThreeElves = await partTwo(elves);
+    console.log('Top three Elves');
+    console.table(topThreeElves);
+    
+  } catch (e) {
+    console.log(e);
+  }
+  console.timeEnd('total time');
+};
 
 type Elf = { name: string, calories: number[], total: number };
 
-const parseInput = async (input: string): Promise<Elf[]> => {
+async function parseInput(input: string): Promise<Elf[]> {
   const blocks: string[] = input.split(/(?:\r?\n){2}/);
 
   const elves: Elf[] = blocks.map((block, index) => {
@@ -15,13 +41,13 @@ const parseInput = async (input: string): Promise<Elf[]> => {
   return elves;
 };
 
-const partOne = async (elves: Elf[]): Promise<Elf> => {
+async function partOne(elves: Elf[]): Promise<Elf> {
   return elves.reduce((accumulator, current) => current.total > accumulator.total ? current : accumulator,
     { name: 'none', calories: [], total: 0 }
   );
 };
 
-const partTwo = async (elves: Elf[]): Promise<Elf[]> => {
+async function partTwo(elves: Elf[]): Promise<Elf[]> {
   const topElves = elves.reduce((accumulator: Elf[], current: Elf) => {
     if(accumulator.length < 3) {
       accumulator.push(current);
@@ -41,23 +67,4 @@ const partTwo = async (elves: Elf[]): Promise<Elf[]> => {
   return topElves;
 };
 
-export const main = async () => {
-  try {
-    /* Parse input */
-    const input: string = await readFile('./public/day1_input.txt');
-    const elves = await parseInput(input);
-
-    /* Part one */
-    const elfWithMostCalories = await partOne(elves);
-    console.log('Elf With Most Calories');
-    console.table(elfWithMostCalories);
-
-    /* Part two */
-    const topThreeElves = await partTwo(elves);
-    console.log('Top three Elves');
-    console.table(topThreeElves);
-
-  } catch (e) {
-    console.log(e);
-  }
-};
+await main();
