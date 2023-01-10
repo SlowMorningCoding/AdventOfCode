@@ -4,7 +4,7 @@ import { readFile } from './readFile.js';
 async function main() {
   console.clear();
   console.log(figlet.textSync('Advent of Code - Day11'));
-  console.time('total');
+  console.time('total time');
   try {
     /* Part one */
     const p1Monkeys: Monkey[] = await getMonkeys(true);
@@ -19,7 +19,7 @@ async function main() {
   } catch (e) {
     console.log(e);
   }
-  console.timeEnd('total');
+  console.timeEnd('total time');
 }
 
 type Operation = { a: string, operator: string, b: string };
