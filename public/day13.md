@@ -1,4 +1,4 @@
-# --- Day 13: Distress Signal ---
+--- Day 13: Distress Signal ---
 You climb the hill and again try contacting the Elves. However, you instead receive a signal you weren't expecting: a distress signal.
 
 Your handheld device must still not be working properly; the packets from the distress signal got decoded out of order. You'll need to re-order the list of received packets (your puzzle input) to decode the message.
@@ -107,7 +107,9 @@ What are the indices of the pairs that are already in the right order? (The firs
 
 Determine which pairs of packets are already in the right order. What is the sum of the indices of those pairs?
 
-# --- Part Two ---
+Your puzzle answer was 4643.
+
+--- Part Two ---
 Now, you just need to put all of the packets in the right order. Disregard the blank lines in your list of received packets.
 
 The distress signal protocol also requires that you include two additional divider packets:
@@ -139,3 +141,5 @@ For the example above, the result of putting the packets in the correct order is
 Afterward, locate the divider packets. To find the decoder key for this distress signal, you need to determine the indices of the two divider packets and multiply them together. (The first packet is at index 1, the second packet is at index 2, and so on.) In this example, the divider packets are 10th and 14th, and so the decoder key is 140.
 
 Organize all of the packets into the correct order. What is the decoder key for the distress signal?
+
+Your puzzle answer was 21614.

@@ -42,7 +42,7 @@ async function partOne(data: []) {
   let rightOrder = 0;
   data.forEach((pair, index) => {
     //console.log(`Pair ${index+1}`);
-    
+
     let result = comparePair(pair[0], pair[1]);
     if (result < 0) {
       rightOrder += index + 1;
@@ -85,10 +85,10 @@ function comparePair(a: any, b: any): number {
   then retry the comparison. 
   */
   else if (typeof a === 'object' && typeof b === 'number') {
-    return comparePair(a,[b]);
+    return comparePair(a, [b]);
   }
   else if (typeof a === 'number' && typeof b === 'object') {
-    return comparePair([a],b);
+    return comparePair([a], b);
   }
   throw new Error("unknown case!");
 }
@@ -98,14 +98,17 @@ async function partTwo(data) {
   data.forEach(pair => {
     items.push(...pair);
   });
-  items.sort(comparePair);
+  // include divider packets
+  items.push([[2]], [[6]])
 
+  items.sort(comparePair);
   let sItems = items.map(a => JSON.stringify(a))
   console.log(sItems);
-  console.log(sItems.indexOf('[[[2]]]'));
-  console.log(sItems.indexOf('[[[6]]]'));
-  
-  
+
+  let div1 = sItems.indexOf('[[2]]') + 1;
+  let div2 = sItems.indexOf('[[6]]') + 1;
+  console.log(`sum: ${div1} * ${div2} = ${div1 * div2}`);
+
 };
 
 await main();

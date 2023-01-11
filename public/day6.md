@@ -1,4 +1,4 @@
-# --- Day 6: Tuning Trouble ---
+--- Day 6: Tuning Trouble ---
 The preparations are finally complete; you and the Elves leave camp on foot and begin to make your way toward the star fruit grove.
 
 As you move through the dense undergrowth, one of the Elves gives you a handheld device. He says that it has many fancy features, but the most important one to set up right now is the communication system.
@@ -28,7 +28,9 @@ nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg: first marker after character 10
 zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 11
 How many characters need to be processed before the first start-of-packet marker is detected?
 
-# --- Part Two ---
+Your puzzle answer was 1598.
+
+--- Part Two ---
 Your device's communication system is correctly detecting packets, but still isn't working. It looks like it also needs to look for messages.
 
 A start-of-message marker is just like a start-of-packet marker, except it consists of 14 distinct characters rather than 4.
@@ -41,3 +43,5 @@ nppdvjthqldpwncqszvftbrmjlhg: first marker after character 23
 nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg: first marker after character 29
 zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
 How many characters need to be processed before the first start-of-message marker is detected?
+
+Your puzzle answer was 2414.
