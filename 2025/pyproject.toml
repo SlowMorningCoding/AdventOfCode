@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adventofcode-2025"
+version = "0.1.0"
+description = "Solutions for Advent of Code 2025"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [ { name = "SlowMorningCoding" } ]
+
+dependencies = [
+  "requests>=2.28.0",
+  "python-dotenv>=0.20.0",
+]
+
+[project.urls]
+Homepage = "https://adventofcode.com/"
+Source = "https://github.com/SlowMorningCoding/AdventOfCode"
+
+[tool.setuptools.packages.find]
+where = ["src"]
