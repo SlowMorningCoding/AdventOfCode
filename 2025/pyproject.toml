@@ -7,7 +7,7 @@ name = "adventofcode-2025"
 version = "0.1.0"
 description = "Solutions for Advent of Code 2025"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.13"
 authors = [ { name = "SlowMorningCoding" } ]
 
 dependencies = [
@@ -21,3 +21,18 @@ Source = "https://github.com/SlowMorningCoding/AdventOfCode"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[flake8]
+max-line-length = 119
+max-doc-length = 119
+
+[tool.black]
+line-length = 119
+
+[tool.ruff]
+line-length = 119
+select = ["E", "F", "W", "C90", "B", "I", "Q"]
+
+[tool.ty.environment]
+python-version = "3.13"
+root = ["./"]
